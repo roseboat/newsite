@@ -1,0 +1,19 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Home>
+    @using ContentModels = Umbraco.Web.PublishedModels;
+    @{
+    Layout = "master.cshtml";
+    }
+
+    <canvas id="shapes" width="2048" height="1041"></canvas>
+    <canvas id="canvas" width="2048" height="1041"></canvas>
+    <div class="container">
+        <div class="home content">
+            @if (@Model.Value("homeHeading") != null){
+            <h1>@Model.Value("homeHeading")</h1>
+            }
+            <div class="home-body">@Model.Value("homeBody")</div>
+        </div>
+    </div>
+    <div class="overlay"></div>
+
+	@Html.Partial("Navigation")

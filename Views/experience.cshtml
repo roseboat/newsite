@@ -1,0 +1,51 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Experience>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@using Umbraco.Web;
+
+@{
+   Layout = "master.cshtml";
+   
+   var timelineItems = Model.Value<List<Umbraco.Web.PublishedModels.TimelineItem>
+    >("jobTimeline").OrderByDescending(x => x.Value("jobTimePeriodStart")).ThenByDescending(x => x.Value("jobTimePeriodEnd"));
+
+        }
+
+                                           <div class="nav-page">
+                                               <div class="container">
+                                                   <div class="experience">
+
+
+                                                       <div class="jobItem">
+                                                           <span class="jobPeriod">When</span>
+                                                           <span class="jobName">Where</span>
+                                                           <span class="jobRole">What</span>
+                                                       </div>
+                                                       @{
+                                                       foreach(var item in timelineItems){
+                                                       <hr class="dashed">
+                                                       <div class="jobItem">
+
+                                                           <span class="jobPeriod">@(item.Value("jobTimePeriodStart")) - @(item.Value("jobTimePeriodEnd"))</span>
+                                                           <span class="jobName noise">@(item.Value("jobName"))</span>
+                                                           @{
+                                                           if(item.Value<bool>
+                                                               ("sticker")){
+
+                                                               <div class="sticker noise"></div>
+                                                               <div class="sticker-text">@item.Value("stickerText")</div>
+                                                               }
+                                                               }
+                                                               <span class="jobRole">@(item.Value("jobRole"))</span>
+                                                               <div class="jobDuties">@(item.Value("jobDuties"))</div>
+
+                                                       </div>
+
+                                                       }
+                                                       }
+                                                       <hr class="dashed">
+
+                                                   </div>
+                                               </div>
+                                               <div class="overlay"></div>
+                                               @Html.Partial("Navigation")
+                                           </div>

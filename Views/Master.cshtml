@@ -1,0 +1,79 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Master>
+    @using Umbraco.Web.Models;
+    @using ContentModels = Umbraco.Web.PublishedModels;
+    @{
+    Layout = null;
+
+    string[] keywordsArr = (string[])Model.Value("pageKeywords");
+    string keywords = "";
+    for (int i=0; i<keywordsArr.Count(); i++){
+                                         keywords +=keywordsArr[i] + ", " ;
+                                         }
+                                         if (keywords.Length>
+        0){
+        keywords = keywords.Substring(0, keywords.Length-2);
+        }
+        var sharingImageURL = "https://www.frontpage.co.uk/images/meta/frontpage-logo.jpg";
+
+        var sharingImage = Model.Value<IPublishedContent>
+            ("pageSharingImage");
+            if (sharingImage != null){
+            sharingImageURL = sharingImage.Url;
+            }
+
+
+}
+
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+
+	<title>@Model.Value("pageTitle")</title>
+	<meta name="description" content="@Model.Value("pageDescription")">
+	<meta name="keywords" content="@keywords">
+	<meta name="author" content="Rosa Downing">
+	<meta name="robots" content="index, follow">
+
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
+
+	@Html.Partial("Favicon")
+
+	<meta property="og:locale" content="en_GB" />
+	<meta property="og:title" content="@Model.Value("pageTitle")" />
+	<!--<meta property="og:url" content="https://www.frontpage.co.uk/" /> NEED TO ADD THIS-->
+	<meta property="og:description" content="@Model.Value("pageDescription")" />
+	<meta property="og:image" content="@(sharingImageURL)"/>
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="@Model.Value("pageTitle")">
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="@Model.Value("pageTitle")">
+	<meta name="twitter:description" content="@Model.Value("pageDescription")">
+	<meta name="twitter:image" content="@(sharingImageURL)">
+	<meta name="twitter:site" content="@("@")rosa_downing">
+	<meta name="twitter:creator" content="@("@")rosa_downing">
+
+	@Html.Partial("Google Analytics")
+
+</head>
+
+<body class="preload">
+	<main class="page">
+		<div class="page__inner">
+			<div class="cursor cursor--small"></div>
+			<canvas class="cursor cursor--canvas" resize></canvas>
+
+			@Html.Partial("Cookies")
+			@RenderBody()
+
+		
+
+		</div>
+	</main>
+	@Html.Partial("Footer Scripts")
+</body>
+</html>
